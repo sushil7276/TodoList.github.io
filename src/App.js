@@ -14,6 +14,8 @@ class App extends Component {
       product: [],
       loading: true
     }
+
+    this.db = firebase.firestore().collection('products')
   }
 
 
@@ -60,28 +62,66 @@ class App extends Component {
   }
 
   handleIncrease = (pro) => {
+    /*
+    // Normaly update this value
+        const { product } = this.state;
+        let index = product.indexOf(pro);
+        product[index].qty += 1;
+    
+        this.setState({
+          product
+        })
+     */
 
+    // In firebase update value
     const { product } = this.state;
     let index = product.indexOf(pro);
-    product[index].qty += 1;
 
-    this.setState({
-      product
-    })
+    let docRef = this.db.doc(product[index].id);
+    docRef.update(
+      {
+        qty: product[index].qty + 1
+      }
+    )
+      .then(() => {
+        console.log("Increase")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
 
   }
 
   handledecrease = (pro) => {
+    /*
+         // Normaly update this value
+        const { product } = this.state;
+        let index = product.indexOf(pro);
+    
+        if (product[index].qty === 0) {
+          return;
+        }
+    
+        product[index].qty -= 1;
+        this.setState({
+          product
+        })
+    */
+
+    // In firebase update value
     const { product } = this.state;
     let index = product.indexOf(pro);
 
-    if (product[index].qty === 0) {
-      return;
-    }
-
-    product[index].qty -= 1;
-    this.setState({
-      product
+    let docRef = this.db.doc(product[index].id);
+    docRef.update({
+      qty: product[index].qty - 1
+    })
+    .then(()=>{
+      console.log("Decrease")
+    })
+    .catch((err)=>{
+      console.log(err)
     })
   }
 
@@ -116,6 +156,22 @@ class App extends Component {
     return total;
   }
 
+  /* Add Product to Firebase DataBase */
+  addProduct = () => {
+    this.db.add({
+      img: 'https://media.istockphoto.com/id/1328117297/photo/washing-machine-isolated-on-white-background.jpg?s=1024x1024&w=is&k=20&c=4AW7fQqUAYUuMOydNk7P_x6DTFTF_I7onVC50JxFeCY=',
+      price: 10000,
+      qty: 1,
+      title: "Washing Machine"
+    })
+      .then((docRef) => {
+        // console.log(docRef);
+      })
+      .catch((err) => {
+        // console.log(err);
+      })
+  }
+
 
   render() {
     const { product, loading } = this.state
@@ -124,6 +180,8 @@ class App extends Component {
         <NavBar
           count={this.getCount()}
         />
+        {/* Add Product Button */}
+        {/* <button onClick={this.addProduct} style={{ padding: 10, fontSize: 20 }}>Add Product</button> */}
 
         {/* This is  Class Based */}
         {/* <Cart
