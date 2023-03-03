@@ -72,7 +72,7 @@ export class CartItem extends Component {
                         {/* Using Destructure  "ondecreaseQuantity" this function */}
                         <img src="https://as1.ftcdn.net/v2/jpg/03/73/49/86/1000_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg" alt="decrease" className='action-icons' onClick={() => ondecreaseQuantity(myProduct)} />
 
-                        {/* Using Destructure  "ondecreaseQuantity" this function */}
+                        {/* Using Destructure  "onDeleteQuantity" this function */}
                         <img src="https://as2.ftcdn.net/v2/jpg/01/90/89/15/1000_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg" alt="delete" className='action-icons' onClick={() => onDeleteProduct(myProduct.id)} />
                     </div>
                 </div>

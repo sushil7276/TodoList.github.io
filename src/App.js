@@ -117,21 +117,34 @@ class App extends Component {
     docRef.update({
       qty: product[index].qty - 1
     })
-    .then(()=>{
-      console.log("Decrease")
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+      .then(() => {
+        console.log("Decrease")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   handleDelete = (id) => {
 
-    const items = this.state.product.filter((item) => item.id !== id);
+    /*
+      // Normaly Delete this value
+      const items = this.state.product.filter((item) => item.id !== id);
 
-    this.setState({
-      product: items
-    })
+      this.setState({
+        product: items
+      })
+    */
+
+    // In firebase Delete value
+    let docRef = this.db.doc(id);
+    docRef.delete()
+      .then(() => {
+        console.log("Delete")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   getCount = () => {
@@ -164,11 +177,11 @@ class App extends Component {
       qty: 1,
       title: "Washing Machine"
     })
-      .then((docRef) => {
-        // console.log(docRef);
+      .then(() => {
+        console.log("adding");
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       })
   }
 
@@ -181,7 +194,7 @@ class App extends Component {
           count={this.getCount()}
         />
         {/* Add Product Button */}
-        {/* <button onClick={this.addProduct} style={{ padding: 10, fontSize: 20 }}>Add Product</button> */}
+        <button onClick={this.addProduct} style={{ padding: 10, fontSize: 20 }}>Add Product</button>
 
         {/* This is  Class Based */}
         {/* <Cart
